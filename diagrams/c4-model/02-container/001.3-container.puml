@@ -1,0 +1,26 @@
+@startuml Diagrama de Container: Site de Músicas
+
+' Versão mais atualizada do C4-PlantUML na internet.
+'!include  https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+' Versão mais atualizada do C4-PlantUML de forma local.
+!include <C4/C4_Container>
+
+title Diagrama de Container: Site de Músicas
+
+' Configuração do layout.
+left to right direction
+'LAYOUT_TOP_DOWN()
+'LAYOUT_AS_SKETCH()
+
+System_Boundary(systemdBoundary, "Play My Music LTDA") {
+    
+    System(site, "Site", "Plataforma de músicas"){
+        Container(login, "Login / Autenticação", "ReactJS", "Usuário se autentica no sistema.")
+        Container(selectMusic, "Seleciona músicas", "ReactJS", "Usuário seleciona músicas para ouvir.")
+        Container(saveFavorites, "Salva músicas favoritas", "ReactJS", "Usuário salva músicas favoritas.")
+        Container(deleteAccount, "Excluir conta", "ReactJS", "Usuário conta na plataforma.")
+    }
+}
+
+@enduml

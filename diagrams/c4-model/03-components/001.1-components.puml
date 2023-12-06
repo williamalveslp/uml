@@ -1,0 +1,54 @@
+@startuml Diagrama de Container: Site de Músicas
+
+' Versão mais atualizada do C4-PlantUML na internet.
+'!include  https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+' Versão mais atualizada do C4-PlantUML de forma local.
+!include <C4/C4_Container>
+
+!define FONTAWESOME https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/font-awesome-5
+!include FONTAWESOME/react.puml
+!include FONTAWESOME/google.puml
+
+!define DEVICONS https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/devicons
+!include DEVICONS/dotnet.puml
+!include DEVICONS/msql_server.puml
+
+title Diagrama de Container: Site de Músicas
+
+' Configuração do layout.
+left to right direction
+'LAYOUT_TOP_DOWN()
+'LAYOUT_AS_SKETCH()
+
+' Legenda dos elementos.
+LAYOUT_WITH_LEGEND()
+
+Person(user, "Usuário", "Usuário que acessa o sistema")
+
+System_Ext(authGoogle, "Autenticação do Google", "Sistema de autenticação do Google", $sprite="google")
+
+System_Boundary(systemdBoundary, "Play My Music LTDA") {
+    
+    System(site, "Site", "Plataforma de músicas"){
+        Container(frontend, "Site de Músicas", "ReactJS", "Frontend da aplicação.",$sprite="react")
+        Container(api, "API", ".NET", "Backend da aplicação.", $sprite="dotnet")
+        ContainerDb(banco, "Banco de Dados", "SQL Server", "Armazena dados da aplicação.", $sprite="msql_server")
+    } 
+}
+
+System_Ext(correios, "Site dos Correios", "Busca o endereço pelo CEP para cadastros")
+
+Rel(user, authGoogle, "Realiza", "HTTPS")
+
+' Customização das relações.
+AddRelTag("relCustomColors1", $textColor="white", $lineColor="black")
+AddRelTag("relCustomColors2", $textColor="black", $lineColor="black")
+
+Rel(authGoogle, frontend, "Utiliza", "HTTP", $tags="relCustomColors2")
+
+Rel_L(frontend, api, "Utiliza", "HTTP", $tags="relCustomColors1")
+Rel_L(api, banco, "Consome", "SQL Protocol", $tags="relCustomColors1")
+Rel_L(api, correios, "Consome", "HTTP", $tags="relCustomColors2")
+
+@enduml

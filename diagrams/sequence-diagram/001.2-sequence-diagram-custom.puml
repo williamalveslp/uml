@@ -1,0 +1,25 @@
+@startuml Diagrama Sequencia / Sequence Diagram
+
+'Criação de componente diferente para "Usuário".
+actor user as "Usuário" #blue
+
+participant Produto
+participant Carrinho
+
+'Criação de componente diferente para "Pagamento".
+queue payment as "Pagamento"
+participant Transportadora
+
+'Alteração de cor para o componente de "Operação".
+participant Operação as operations #lightGreen
+
+user -> Produto : Seleciona
+user -> Carrinho : Adicionado no
+user -> payment : Realiza
+user <-- payment : Rejeita
+
+payment -> Transportadora : Quando Aprovado, envia notificação para
+Transportadora -> operations : Processa o pedido
+operations -> user: Entrega a mercadoria para
+
+@enduml

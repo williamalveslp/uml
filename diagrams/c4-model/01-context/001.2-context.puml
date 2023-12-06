@@ -1,0 +1,23 @@
+@startuml Diagrama de Contexto: Site de Músicas
+
+' Versão mais atualizada do C4-PlantUML na internet.
+'!include  https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+' Versão mais atualizada do C4-PlantUML de forma local.
+!include <C4/C4_Container>
+
+Person(user, "Usuário", "Usuário que acessa o sistema")
+
+System_Ext(authGoogle, "Autenticação do Google", "Sistema de autenticação do Google")
+
+System_Boundary(systemdBoundary, "Play My Music LTDA") {
+    System(site, "Plataforma de Músicas", "Plataforma de música que disponibiliza músicas para os usuários")
+}
+
+System_Ext(correios, "Site dos Correios", "Busca o endereço pelo CEP para cadastros")
+
+Rel(user, authGoogle, "Realiza", "HTTPS")
+Rel(authGoogle, site, "Utiliza", "HTTP")
+Rel(site, correios, "Consome", "HTTP")
+
+@enduml

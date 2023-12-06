@@ -1,0 +1,17 @@
+@startuml Diagrama de Contexto: Site de Músicas
+
+' Versão mais atualizada do C4-PlantUML na internet.
+'!include  https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+' Versão mais atualizada do C4-PlantUML de forma local.
+!include <C4/C4_Container>
+
+Person(user, "Usuário", "Usuário que acessa o sistema")
+
+System(site, "Site de Músicas", "Plataforma de música que disponibiliza músicas para os usuários")
+System_Ext(correios, "Site dos Correios", "Site que busca o endereço pelo CEP do usuário")
+
+Rel(user, site, "Utiliza", "HTTP")
+Rel(site, correios, "Utiliza", "HTTP")
+
+@enduml

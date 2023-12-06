@@ -1,0 +1,68 @@
+@startuml Diagrama de Contexto: Site de Músicas
+
+' Versão mais atualizada do C4-PlantUML na internet.
+'include  https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+' Versão mais atualizada do C4-PlantUML de forma local.
+!include <C4/C4_Container>
+
+' Diversos Ícones pelo FontAweome. Documentação: https://github.com/tupadr3/plantuml-icon-font-sprites/blob/master/font-awesome-5/index.md
+!define FONTAWESOME https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/font-awesome-5
+!include FONTAWESOME/users.puml
+!include FONTAWESOME/google.puml
+'!include FONTAWESOME/react.puml
+
+'!include FONTAWESOME/facebook.puml
+'!include FONTAWESOME/instagram.puml
+'!include FONTAWESOME/whatsapp.puml
+'!include FONTAWESOME/tiktok.puml
+'!include FONTAWESOME/telegram.puml
+'!include FONTAWESOME/linkedin.puml
+
+'!define DEVICONS https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/devicons
+'!include DEVICONS/angular.puml
+'!include DEVICONS/java.puml
+'!include DEVICONS/dotnet.puml
+'!include DEVICONS/nodejs.puml
+
+'!include DEVICONS/msql_server.puml
+'!include DEVICONS/mysql.puml
+'!include DEVICONS/postgresql.puml
+
+' Azure Portal Ícones. Documentação: https://github.com/plantuml-stdlib/Azure-PlantUML
+'!define AzurePuml https://raw.githubusercontent.com/plantuml-stdlib/Azure-PlantUML/release/2-2/dist
+'!includeurl AzurePuml/AzureCommon.puml
+'!includeurl AzurePuml/Databases/all.puml
+'!includeurl AzurePuml/Compute/AzureFunction.puml
+'!includeurl AzurePuml/Storage/AzureStorage.puml
+
+title Diagrama de Contexto: Site de Músicas
+
+' Configuração do layout.
+left to right direction
+'LAYOUT_TOP_DOWN()
+'LAYOUT_AS_SKETCH()
+
+' Legenda dos elementos.
+LAYOUT_WITH_LEGEND()
+
+Person(user, "Usuário", "Usuário que acessa o sistema", $sprite="users")
+
+System_Ext(authGoogle, "Autenticação do Google", "Sistema de autenticação do Google", $sprite="google")
+
+' Adiciona tooltip em elementos.
+'note top: Realiza a autenticação com a conta do Google (Gmail).
+'note right: Realiza a autenticação com a conta do Google (Gmail).
+note left: Realiza a autenticação com a conta do Google (Gmail).
+
+System_Boundary(systemdBoundary, "Play My Music LTDA") {
+    System(site, "Plataforma de Músicas", "Plataforma de música que disponibiliza músicas para os usuários")
+}
+
+System_Ext(correios, "Site dos Correios", "Busca o endereço pelo CEP para cadastros")
+
+Rel(user, authGoogle, "Realiza", "HTTPS")
+Rel(authGoogle, site, "Utiliza", "HTTP")
+Rel(site, correios, "Consome", "REST API")
+
+@enduml

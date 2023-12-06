@@ -1,0 +1,12 @@
+@startuml Diagrama Sequencia / Sequence Diagram
+
+user -> Produto : Seleciona
+user -> Carrinho : Adicionado no
+user -> payment : Realiza
+user <-- payment : Rejeita
+
+payment -> Transportadora : Quando Aprovado, envia notificação para
+Transportadora -> operations : Processa o pedido
+operations -> user: Entrega a mercadoria para
+
+@enduml
