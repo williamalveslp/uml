@@ -1,0 +1,39 @@
+@startuml Diagrama Sequencia / Sequence Diagram
+
+!include <C4/C4_Container>
+
+title Diagrama Sequencia / Sequence Diagram
+
+'Criação de componente diferente para "Usuário".
+actor user as "Usuário" #blue
+
+participant product as "Produto"
+participant basket as "Carrinho"
+
+'Criação de componente diferente para "Pagamento".
+box "Sistema Externo" #LightBlue
+    participant payment [
+        = Pagamento
+        ----
+        Enviado para uma fila de mensageria, e processado.
+    ]
+end box
+
+participant transportation as "Transportadora"
+
+'Alteração de cor para o componente de "Operação".
+participant Operação as operations
+'participant Operação as operations #lightGreen
+
+autonumber "[00]"
+
+user o-> product : Seleciona
+product -> basket : Adicionado no
+basket -> payment : Realiza
+user <-[#red]- payment : <color:red><b>Rejeita</b></color>
+
+payment -> transportation : Quando Aprovado, envia notificação para
+transportation -> operations : Processa o pedido
+operations ->o user: Entrega a mercadoria para
+
+@enduml

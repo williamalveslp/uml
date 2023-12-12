@@ -1,14 +1,18 @@
 @startuml Diagrama Sequencia / Sequence Diagram
 
+!include <C4/C4_Container>
+
+title Diagrama Sequencia / Sequence Diagram
+
 'Criação de componente diferente para "Usuário".
 actor user as "Usuário" #blue
 
-participant Produto
-participant Carrinho
+participant product as "Produto"
+participant basket as "Carrinho"
 
 'Criação de componente diferente para "Pagamento".
 queue payment as "Pagamento"
-participant Transportadora
+participant transportation as "Transportadora"
 
 'Alteração de cor para o componente de "Operação".
 participant Operação as operations
@@ -16,13 +20,13 @@ participant Operação as operations
 
 autonumber "[00]"
 
-user o-> Produto : Seleciona
-user -> Carrinho : Adicionado no
-user -> payment : Realiza
+user o-> product : Seleciona
+product -> basket : Adicionado no
+basket -> payment : Realiza
 user <-[#red]- payment : <color:red><b>Rejeita</b></color>
 
-payment -> Transportadora : Quando Aprovado, envia notificação para
-Transportadora -> operations : Processa o pedido
+payment -> transportation : Quando Aprovado, envia notificação para
+transportation -> operations : Processa o pedido
 operations ->o user: Entrega a mercadoria para
 
 @enduml
